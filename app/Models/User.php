@@ -13,10 +13,10 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    public function hotel(){
+    public function hotels(){
         return $this->hasMany(Hotel::class);
     }
-    public function booking(){
+    public function bookings(){
         return $this->hasMany(Booking::class);
     }
 

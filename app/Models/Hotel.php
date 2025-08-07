@@ -12,7 +12,7 @@ class Hotel extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
-    public function room(){
+    public function rooms(){
         return $this->hasMany(Room::class);
     }
 }
