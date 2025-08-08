@@ -16,7 +16,7 @@ return new class extends Migration
             // $table->unsignedBigInteger('hotel_id');
             // $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
             $table->foreignId('hotel_id')->constrained('hotels', indexName: 'rooms_hotel_id')->onDelete('cascade');
-            $table->enum('room_type', ['standard', 'deluxe', 'suiite']);
+            $table->enum('room_type', ['standard', 'deluxe', 'suite']);
             $table->decimal('price', 10, 2);
             $table->integer('capacity')->nullable();
             $table->integer('stock')->nullable();

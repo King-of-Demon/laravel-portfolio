@@ -19,13 +19,15 @@ class HotelFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
-            'name' => fake()->word(),
+            // 'user_id' => User::factory(),
+            'user_id' => User::where('role', 'pemilik_hotel')->inRandomOrder()->first()->id,
+            'name' => fake()->company(),
             'address' => fake()->address(),
             'city' => fake()->city(),
-            'province' => fake()->randomElement(['jawa barat', 'jawa timur', 'jawa tengah', 'Banten', 'Jakarta', 'Yogyakarta']),
-            'description' => fake()->sentence(),
+            'province' => fake()->randomElement(['Jawa barat', 'Jawa timur', 'Jawa tengah', 'Banten', 'Jakarta', 'Yogyakarta']),
+            'description' => fake()->paragraph(),
             'thumbnail' => fake()->bothify('##??-##-??####-?#?#?') . '.' . fake()->randomElement(['png', 'jpg', 'jpeg', 'web']),
+            // 'thumbnail' => 'hotels/' . fake()->image('public/storage/hotels', 640, 480, null, false),
         ];
     }
 }
