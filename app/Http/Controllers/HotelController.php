@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hotel;
+use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HotelController extends Controller
 {
@@ -40,10 +42,10 @@ class HotelController extends Controller
         ]);
 
         if ($request->hasFile('thumbnail')) {
-            $validated['thumbnail'] = $request->file('thumbnail')->store('thumbnails');
+            $validated['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
-        $validated['user_id'] = auth()->id();
+        $validated['user_id'] = Auth::id();
 
         Hotel::create($validated);
 
@@ -61,24 +63,40 @@ class HotelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Hotel $hotel)
     {
-        //
+        return view('hotels.edit', compact('hotel'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Hotel $hotel)
     {
-        //
+        $validated = $request->request([
+            'name' => 'required|string|max:225',
+            'address' => 'required|string',
+            'city' => 'required|string|max:100',
+            'province' => 'required|string|max:100',
+            'description' => 'nullable|string',
+            'thumbnail' => 'nullable|image|max:3068',
+        ]);
+
+        if ($request->hasFile('thumbnail')) {
+            $validated['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
+        }
+
+        $hotel->update($validated);
+
+        return redirect()->route('dashboard')->with('success', 'Nama hotel anda berhasil diubah!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Hotel $hotel)
     {
-        //
+        $hotel->delete();
+        return redirect()->route('dashboard')->with('success', 'Hotel berhasil dihapus!');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
@@ -16,7 +17,10 @@ class UserSeeder extends Seeder
     public function run(): void
     {
 
-        User::factory()->owner()->create();
-        User::factory()->owner()->create();
+        // User::factory()->owner()->create();
+        User::factory()->owner()->create([
+            'name' => 'Muhammad Dawud Ibrahim',
+            'email' => 'admin@example.com',
+        ]);
     }
 }
